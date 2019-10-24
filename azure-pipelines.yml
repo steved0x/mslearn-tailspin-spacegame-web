@@ -1,5 +1,7 @@
 pool:
   name: 'MyAgentPool'
+  demands:
+    - npm
 
 variables:
   wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot'
