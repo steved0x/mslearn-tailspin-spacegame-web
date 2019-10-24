@@ -1,7 +1,5 @@
 pool:
-  name: 'MyAgentPool'
-  demands:
-    - npm
+  vmImage: 'ubuntu-16.04'
 
 variables:
   wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot'
