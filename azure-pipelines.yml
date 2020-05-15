@@ -4,7 +4,10 @@ pool:
   trigger:
     branches:
       exclude:
-        users/features
+        - users/features
+    path:
+      exclude:
+        - templates/*
 
 
 steps:
