@@ -1,45 +1,19 @@
-pool:
-  vmImage: 'ubuntu-16.04'
+# Build NodeJS Express app using Azure Pipelines
+# https://docs.microsoft.com/azure/devops/pipelines/ecosystems/javascript?view=azure-devops
+strategy:
+  matrix:
+    linux:
+      imageName: 'ubuntu-16.04'
+    mac:
+      imageName: 'macos-10.14'
+    windows:
+      imageName: 'vs2017-win2016'
 
-variables:
-  wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot'
-  dotnetSdkVersion: '2.1.505'
+pool:
+  vmImage: $(imageName)
 
 steps:
-- task: DotNetCoreInstaller@0
-  displayName: 'Use .NET Core SDK $(dotnetSdkVersion)'
-  inputs:
-    version: '$(dotnetSdkVersion)'
-
-- task: Npm@1
-  displayName: 'Run npm install'
-  inputs:
-    verbose: false
-
-- script: './node_modules/.bin/node-sass $(wwwrootDir) --output $(wwwrootDir)'
-  displayName: 'Compile Sass assets'
-
-- task: gulp@1
-  displayName: 'Run gulp tasks'
-
-- script: 'echo "$(Build.DefinitionName), $(Build.BuildId), $(Build.BuildNumber)" > buildinfo.txt'
-  displayName: 'Write build info'
-  workingDirectory: $(wwwrootDir)
-
-- task: DotNetCoreCLI@2
-  displayName: 'Restore project dependencies'
-  inputs:
-    command: 'restore'
-    projects: '**/*.csproj'
-
-- template: templates/build.yml
-  parameters:
-    buildConfiguration: 'Debug'
-
-- template: templates/build.yml
-  parameters:
-    buildConfiguration: 'Release'
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
-  condition: succeeded()
+- pwsh: echo Hello $(imageName)
+- pwsh: Write-Host Hello $(imageName)
+- powershell: echo Hello $(imageName)
+- powershell: Write-Host Hello $(imageName)
